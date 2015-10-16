@@ -96,14 +96,14 @@ public class Evaluation {
 
         for (int i = 0; i <carton.getyMax(); i++) {
             for (int j = 0; j < carton.getxMax(); j++) {
-                if(!carton.getNode(i,j).isBad()&&carton.getNode(i,j).isEgg()){
+                if(!carton.getNode(j,i).isBad()&&carton.getNode(j,i).isEgg()){
                     legalEggs+= 1;
                 }
-                else if (carton.getNode(i,j).isBad()){
+                else if (carton.getNode(j,i).isBad()&&carton.getNode(j,i).isEgg()){
                     badEggs+= 1;
                 }
             }
         }
-        carton.setFScore((legalEggs)/(legalEggs+badEggs));
+        carton.setFScore((legalEggs)/(carton.getxMax()*k));
     }
 }

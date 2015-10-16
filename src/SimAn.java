@@ -23,19 +23,6 @@ public class SimAn {
     }
 
 
-
-    public void createNeighborsForAll(){
-        for (int i = 0; i < currentCarton.getyMax()-1; i++) {
-            for (int j = 0; j < currentCarton.getxMax()-1; j++) {
-                if(currentCarton.getNode(j,i).isBad()){
-                    createNeighborBoards(currentCarton.getNode(j,i));
-                }
-
-            }
-
-        }
-    }
-
     public void simulate(){
 
         Evaluation ev = new Evaluation(this.maxEggs);
@@ -48,7 +35,7 @@ public class SimAn {
                 System.out.println("Beste score: "+currentCarton.getFScore());
                 break;
             }
-            createNeighborsForAll();
+            createNeighborBoards();
 
             for(Carton carton: neighbours){
                 ev.legalCheck(carton);
@@ -105,7 +92,35 @@ public class SimAn {
 
     }
 
-    public void createNeighborBoards(cartonNode Node){
+    public void createNeighborBoards(){
+        Carton newNeighbour = currentCarton;
+
+        for (int i = 0; i < newNeighbour.getyMax(); i++) {
+            for (int j = 0; j < newNeighbour.getxMax(); j++) {
+                cartonNode thisNode = newNeighbour.getNode(j,i);
+                if(thisNode.isBad()&&thisNode.isEgg()){
+                    thisNode.removeEgg();
+                }
+            }
+        }
+
+        for (int i = 0; i < currentCarton.getCarton().size()*maxEggs; i++) {
+
+            int randY = new Random().nextInt(currentCarton.getyMax());
+            int randX = new Random().nextInt(currentCarton.getyMax());
+            cartonNode randNode = newNeighbour.getNode(randX, randY);
+
+            if(randNode.isEgg()){
+                randNode.removeEgg();
+            }else{
+                randNode.setEgg();
+            }
+            neighbours.add(newNeighbour);
+        }
+
+    }
+
+/*    public void createNeighborBoards(cartonNode Node){
 
         //Check Right
         if(Node.getX()!=currentCarton.getxMax()-1 && !currentCarton.getNode(Node.getX()+1, Node.getY()).isEgg()){
@@ -167,7 +182,7 @@ public class SimAn {
             neighbour.getCarton().get(y).set(x, rightNode);
             neighbours.add(neighbour);
         }
-    }
+    }*/
 
     public String toString(){
         return currentCarton.toString();
@@ -180,7 +195,7 @@ public class SimAn {
 
     public static void main(String[] args){
 
-        SimAn sim = new SimAn(5,5,2,0.9,3,0.001);
+        SimAn sim = new SimAn(5,5,2,0.9,3,0.0001);
         System.out.println("Temperature: "+sim.temperature);
 
 
