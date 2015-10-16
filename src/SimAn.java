@@ -93,7 +93,7 @@ public class SimAn {
     }
 
     public void createNeighborBoards(){
-        Carton newNeighbour = currentCarton;
+
 
         /*for (int i = 0; i < newNeighbour.getyMax(); i++) {
             for (int j = 0; j < newNeighbour.getxMax(); j++) {
@@ -104,10 +104,10 @@ public class SimAn {
             }
         }*/
 
-        for (int i = 0; i < currentCarton.getCarton().size()*maxEggs*2; i++) {
-
+        for (int i = 0; i < currentCarton.getCarton().size()*maxEggs; i++) {
+            Carton newNeighbour = currentCarton;
             int randY = new Random().nextInt(currentCarton.getyMax());
-            int randX = new Random().nextInt(currentCarton.getyMax());
+            int randX = new Random().nextInt(currentCarton.getxMax());
             cartonNode randNode = newNeighbour.getNode(randX, randY);
 
             if(randNode.isEgg()){
