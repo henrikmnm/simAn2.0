@@ -96,7 +96,7 @@ public class Evaluation {
 
         for (int i = 0; i <carton.getyMax(); i++) {
             for (int j = 0; j < carton.getxMax(); j++) {
-                if(!carton.getNode(j,i).isBad()&&carton.getNode(j,i).isEgg()){
+                if(carton.getNode(j,i).isGood()&&carton.getNode(j,i).isEgg()){
                     legalEggs+= 1;
                 }
                 else if (carton.getNode(j,i).isBad()&&carton.getNode(j,i).isEgg()){
@@ -104,6 +104,6 @@ public class Evaluation {
                 }
             }
         }
-        carton.setFScore((legalEggs)/(carton.getxMax()*k));
+        carton.setFScore((legalEggs)/(carton.getxMax()*k+badEggs));
     }
 }

@@ -8,6 +8,7 @@ public class cartonNode {
     private int x;
     private int y;
     private boolean isBad;
+    private boolean isGood;
     private char cartonChar;
 
     public cartonNode(char isEgg, int x, int y){
@@ -34,6 +35,8 @@ public class cartonNode {
     public void removeEgg(){
         this.isEgg = false;
         this.cartonChar = '.';
+        this.isBad = false;
+        this.isGood = false;
     }
 
 
@@ -59,12 +62,17 @@ public class cartonNode {
 
     public void setBad() {
         this.isBad = true;
+        this.isGood = false;
         this.cartonChar = '1';
     }
 
     public void setGood() {
         this.isBad = false;
+        this.isGood = true;
         this.cartonChar = '0';
+    }
+    public boolean isGood(){
+        return isGood;
     }
 
     public String toString(){
